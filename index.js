@@ -1,4 +1,3 @@
-//  import express
 const express = require("express");
 
 const server = express();
@@ -24,8 +23,6 @@ const projects = [
 
 let qtdReq = 0;
 
-//  Tempo Requisição
-//  Número de requisições
 server.use((req, res, next) => {
   qtdReq++;
   console.time(`Requisição`);
@@ -45,12 +42,10 @@ function checkProjectExists(req, res, next) {
   return next();
 }
 
-//List Projects
 server.get("/projects/", (req, res) => {
   return res.json(projects);
 });
 
-//Add Project
 server.post("/projects/", (req, res) => {
   const { id, title } = req.body;
   projects.push({ id: parseInt(id), title: title, tasks: [] });
@@ -58,7 +53,6 @@ server.post("/projects/", (req, res) => {
   return res.json(projects);
 });
 
-//Add tasks
 server.post("/projects/:id/tasks", checkProjectExists, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
@@ -69,8 +63,6 @@ server.post("/projects/:id/tasks", checkProjectExists, (req, res) => {
   return res.json(projects);
 });
 
-//Update projects
-// Alterar apeanas o titulo do projeto
 server.put("/projects/:id", checkProjectExists, (req, res) => {
   const { title } = req.body;
   const { id } = req.params;
@@ -81,7 +73,6 @@ server.put("/projects/:id", checkProjectExists, (req, res) => {
   return res.json(projects);
 });
 
-//Delete project
 server.delete("/projects/:id", checkProjectExists, (req, res) => {
   const { id } = req.params;
 
